@@ -26,7 +26,8 @@ public class Finance {
         SRP,
         USN,
         ENVD_ESHN,
-        USN_ENVD
+        USN_ENVD,
+        AUSN
     }
 
 }
