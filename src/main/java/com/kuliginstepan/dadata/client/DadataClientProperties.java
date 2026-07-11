@@ -66,4 +66,35 @@ public class DadataClientProperties {
      * SSL verification option
      */
     private boolean verifySsl = true;
+
+    /**
+     * Максимальное количество соединений в пуле.
+     * Рекомендуется устанавливать не более 50, чтобы не превысить 60 новых соединений в минуту.
+     * По умолчанию 30.
+     */
+    private int maxConnections = 30;
+
+    /**
+     * Время ожидания свободного соединения из пула, если все заняты.
+     * По умолчанию 30 секунд.
+     */
+    private Duration pendingAcquireTimeout = Duration.ofSeconds(30);
+
+    /**
+     * Максимальное время простоя соединения в пуле (после этого оно закрывается).
+     * По умолчанию 60 секунд.
+     */
+    private Duration maxIdleTime = Duration.ofSeconds(60);
+
+    /**
+     * Максимальное время жизни соединения (с момента создания).
+     * По умолчанию 60 секунд.
+     */
+    private Duration maxLifeTime = Duration.ofSeconds(60);
+
+    /**
+     * Интервал фоновой очистки пула от простаивающих соединений.
+     * По умолчанию 30 секунд.
+     */
+    private Duration evictInBackground = Duration.ofSeconds(30);
 }

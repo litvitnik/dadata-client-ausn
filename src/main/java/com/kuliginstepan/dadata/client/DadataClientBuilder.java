@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
+import reactor.netty.resources.ConnectionProvider;
 import reactor.netty.tcp.DefaultSslContextSpec;
 import reactor.netty.transport.ProxyProvider;
 
@@ -60,7 +61,15 @@ public class DadataClientBuilder {
     }
 
     private HttpClient buildHttpClient() {
-        HttpClient httpClient = HttpClient.create()
+        ConnectionProvider connectionProvider = ConnectionProvider.builder("dadata-pool")
+                .maxConnections(clientProperties.getMaxConnections())
+                .pendingAcquireTimeout(clientProperties.getPendingAcquireTimeout())
+                .maxIdleTime(clientProperties.getMaxIdleTime())
+                .maxLifeTime(clientProperties.getMaxLifeTime())
+                .evictInBackground(clientProperties.getEvictInBackground())
+                .build();
+
+        HttpClient httpClient = HttpClient.create(connectionProvider)
             .doOnConnected(con -> con.addHandlerLast(
                 new ReadTimeoutHandler(clientProperties.getTimeout().toMillis(),
                     TimeUnit.MILLISECONDS)));
