@@ -9,22 +9,11 @@ plugins {
 apply from: 'gradle/publish.gradle'
 
 group = 'com.github.kuliginstepan'
-version = '4.0.0'
+version = '4.0.1'
 sourceCompatibility = JavaVersion.VERSION_17
 
-def nexusUsername = System.getenv("NEXUS_USERNAME") ?: (project.findProperty("NEXUS_USERNAME") ?: "")
-def nexusPassword = System.getenv("NEXUS_PASSWORD") ?: (project.findProperty("NEXUS_PASSWORD") ?: "")
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            username = nexusUsername
-            password = nexusPassword
-        }
-    }
-}
-
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -79,6 +68,30 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+publishing {
+    publications {
+        dadataclient(MavenPublication) {
+            artifactId = "dadata-client"
+            version = version  // или version = project.version
+            //from components.java
+            artifact jar
+
+            suppressPomMetadataWarningsFor('signing')
+        }
+    }
+
+    repositories {
+        maven {
+            name = "fintech"
+            url = System.getenv("FINTECH_MAVEN_URL")
+            credentials {
+                username = System.getenv("FINTECH_MAVEN_LOGIN")
+                password = System.getenv("FINTECH_MAVEN_PASSWORD")
+            }
+        }
+    }
+}
+
 test {
     useJUnitPlatform()
 }
@@ -89,5 +102,16 @@ jacocoTestReport {
         csv.required = false
     }
 }
+
+// Явно отключаем задачи подписи
+tasks.withType(Sign) {
+    onlyIf { false }
+}
+
+// ИЛИ отключаем конкретную задачу
+tasks.named('signMavenPublication') {
+    enabled = false
+}
+
 
 test.finalizedBy jacocoTestReport
