@@ -1,0 +1,12 @@
+.template_repo: &repo
+  project: &ci_tmpl "devops/ci/templates"
+  ref: &ci_tmpl_vers "$CI_TMPL_V_PCIDSS"
+
+variables:
+  #nexus publishing management
+  CI_TMPL_EASY_USE_NEXUS_HOSTED: true # enables using nexus-hosted public repo in ci
+  CI_TMPL_USE_LEGACY_NEXUS: false # enables publishing libs to legacy nexus.wildberries
+  CI_DISABLE_CACHE: true
+
+include:
+  - { <<: *repo, file: /pipelines/java-lib.yml }

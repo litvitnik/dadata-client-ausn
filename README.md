@@ -1,8 +1,3 @@
-![Maven Central](https://img.shields.io/maven-central/v/com.github.kuliginstepan/dadata-client)
-![](https://github.com/kuliginstepan/dadata-client/workflows/Java%20CI%20with%20Gradle/badge.svg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/11dd4516337e4a9da32b427262e96fe7)](https://www.codacy.com/app/KuliginStepan/dadata-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KuliginStepan/dadata-client&amp;utm_campaign=Badge_Grade)
-[![codecov](https://codecov.io/gh/KuliginStepan/dadata-client/branch/master/graph/badge.svg)](https://codecov.io/gh/KuliginStepan/dadata-client)
-
 # dadata-client
 
 Dadata Suggestions API client for Spring (Java)
@@ -16,18 +11,20 @@ Dadata API client based on non-blocking HTTP client of Spring WebClient. Support
 ## Add a dependency
 
 Gradle:
-	
+
 	dependencies {
-	        implementation 'com.github.kuliginstepan:dadata-client:Tag'
+	        implementation 'ru.wb.fintech.sellerloans.dadata:dadata-client:4.0.1'
 	}
-	
+
 Maven:
-	
+
 	<dependency>
-	    <groupId>com.github.kuliginstepan</groupId>
+	    <groupId>ru.wb.fintech.sellerloans.dadata</groupId>
 	    <artifactId>dadata-client</artifactId>
-	    <version>Tag</version>
+	    <version>4.0.1</version>
 	</dependency>
+
+Артефакт публикуется в nexus `seller-loans-maven2-release-public`. Версии помимо тегов содержат суффикс с коротким хешем коммита (например `4.0.1.615f6975`); версия без суффикса публикуется с защищенного тега в prod.
 
 ## Configuration
 
